@@ -26,6 +26,13 @@ param(
     [Parameter(Mandatory=$true)]
     [string] $NetworkparametersnetworkSubnetName,
 
+    [Parameter(Mandatory=$False)]
+    [String] $AdminUserName,
+
+    [Parameter(Mandatory=$true)]
+    [string] $AdminPassword
+
+
 )
 
 
@@ -43,7 +50,7 @@ try
         -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
 
 if ($SubscriptionID -eq "getcustomerdefault") {$SubscriptionID = Get-AutomationVariable -Name DefaultSubscriptionID}
-if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name DefaultSubscriptionID}
+if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
 
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
@@ -89,8 +96,8 @@ $Azureparameters = @{}
 $Azureparameters.Add("ServerStorageType", "Standard_LRS")
 $Azureparameters.Add("VmSize", "Standard_D2_v2")
 $Azureparameters.Add("ServerbaseName", $ServerbaseName)
-$Azureparameters.Add("AdminUserName", "alcadmin")
-$Azureparameters.Add("AdminPassword", "Welkom123")
+$Azureparameters.Add("AdminUserName", $AdminUserName)
+$Azureparameters.Add("AdminPassword", $AdminPassword)
 $Azureparameters.Add("ServersStorageName", $StorageAccountName) #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
 $NetworkparametersNetWorkName
 $NetworkparametersResourceGroupName
