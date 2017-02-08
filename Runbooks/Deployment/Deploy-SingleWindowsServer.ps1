@@ -21,9 +21,6 @@ param(
     [string] $NetworkparametersnetworkSubnetName,
 
     [Parameter(Mandatory=$True)]
-    [int] $numberOfInstances,
-
-    [Parameter(Mandatory=$False)]
     [String] $AdminUserName,
 
     [Parameter(Mandatory=$False)]
@@ -59,14 +56,14 @@ try
         -ApplicationId $servicePrincipalConnection.ApplicationId `
         -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
 
-if ($SubscriptionID -eq "getcustomerdefault") {$SubscriptionID = Get-AutomationVariable -Name DefaultSubscriptionID}
-if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
-if ($backuppolicyparameterspolicyName  -eq "getcustomerdefault") {$backuppolicyparameterspolicyName = Get-AutomationVariable -Name backuppolicyparameterspolicyName}
-if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
-#if ($backuppolicyparameterspolicyName  -eq "getcustomerdefault") {$backuppolicyparameterspolicyName = Get-AutomationVariable -Name backuppolicyparameterspolicyName}
-if ($WindowsOSVersion  -eq "getcustomerdefault") {$WindowsOSVersion = Get-AutomationVariable -Name CustomerDefaultWindowsOSVersion}
-if ($ServerStorageType  -eq "getcustomerdefault") {$ServerStorageType = Get-AutomationVariable -Name CustomerDefaultServerStorageType}
-if ($VmSize  -eq "getcustomerdefault") {$VmSize = Get-AutomationVariable -Name CustomerDefaultVmSize}
+if ($SubscriptionID -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$SubscriptionID = Get-AutomationVariable -Name DefaultSubscriptionID}
+if ($NetworkparametersNetWorkName -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
+if ($backuppolicyparameterspolicyName -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$backuppolicyparameterspolicyName = Get-AutomationVariable -Name backuppolicyparameterspolicyName}
+if ($NetworkparametersNetWorkName -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
+if ($WindowsOSVersion  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$WindowsOSVersion = Get-AutomationVariable -Name CustomerDefaultWindowsOSVersion}
+if ($ServerStorageType  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$ServerStorageType = Get-AutomationVariable -Name CustomerDefaultServerStorageType}
+if ($VmSize  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$VmSize = Get-AutomationVariable -Name CustomerDefaultVmSize}
+$StorageAccountName=$StorageAccountName.tolower()
 
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
@@ -213,7 +210,6 @@ $Azureparameters.Add("ServerName", $ServerName)
 $Azureparameters.Add("AdminUserName", $AdminUserName)
 $Azureparameters.Add("AdminPassword", $AdminPassword)
 $Azureparameters.Add("ServersStorageName", $StorageAccountName) #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-$Azureparameters.Add("numberOfInstances", $numberOfInstances)
 $Azureparameters.Add("WindowsOSVersion", $WindowsOSVersion)
 $Azureparameters.Add("virtualNetworkResourceGroup", (Get-AutomationVariable -Name NetworkparametersResourceGroupName))
 $Azureparameters.Add("virtualNetworkName", $NetworkparametersNetWorkName)
