@@ -53,7 +53,7 @@ try
 if ($SubscriptionID -eq "getcustomerdefault") {$SubscriptionID = Get-AutomationVariable -Name DefaultSubscriptionID}
 if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
 if ($backuppolicyparameterspolicyName  -eq "getcustomerdefault") {$backuppolicyparameterspolicyName = Get-AutomationVariable -Name backuppolicyparameterspolicyName}
-
+$backuppolicyparameterspolicyName
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
 
@@ -102,9 +102,7 @@ $Azureparameters.Add("ServerbaseName", $ServerbaseName)
 $Azureparameters.Add("AdminUserName", $AdminUserName)
 $Azureparameters.Add("AdminPassword", $AdminPassword)
 $Azureparameters.Add("ServersStorageName", $StorageAccountName) #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-$NetworkparametersNetWorkName
-$NetworkparametersResourceGroupName
-$azurelocation
+
 #-----------------------
 #First we make an array with parameters needed for all deployments
 #-----------------------
