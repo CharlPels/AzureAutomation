@@ -17,12 +17,6 @@ param(
     [Parameter(Mandatory=$true)]
     [String] $StorageAccountName,
 
-    [Parameter(Mandatory=$false)]
-    [String] $SubscriptionID = "getcustomerdefault",
-
-    [Parameter(Mandatory=$False)]
-    [String] $NetworkparametersNetWorkName = "getcustomerdefault",
-
     [Parameter(Mandatory=$true)]
     [string] $NetworkparametersnetworkSubnetName,
 
@@ -30,9 +24,16 @@ param(
     [String] $AdminUserName,
 
     [Parameter(Mandatory=$true)]
-    [string] $AdminPassword
+    [string] $AdminPassword,
 
+    [Parameter(Mandatory=$false)]
+    [String] $SubscriptionID = "getcustomerdefault",
 
+    [Parameter(Mandatory=$False)]
+    [String] $NetworkparametersNetWorkName = "getcustomerdefault",
+
+    [Parameter(Mandatory=$False)]
+    [String] $backuppolicyparameterspolicyName = "getcustomerdefault"
 )
 
 
@@ -51,6 +52,7 @@ try
 
 if ($SubscriptionID -eq "getcustomerdefault") {$SubscriptionID = Get-AutomationVariable -Name DefaultSubscriptionID}
 if ($NetworkparametersNetWorkName -eq "getcustomerdefault") {$NetworkparametersNetWorkName = Get-AutomationVariable -Name NetworkparametersNetWorkName}
+if ($backuppolicyparameterspolicyName  -eq "getcustomerdefault") {$backuppolicyparameterspolicyName = Get-AutomationVariable -Name backuppolicyparameterspolicyName}
 
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
@@ -85,7 +87,8 @@ $azureAdApplicationApplicationId =Get-AutomationVariable -Name azureAdApplicatio
 $LogAnalyticsworkspaceid =Get-AutomationVariable -Name LogAnalyticsworkspaceid
 $LogAnalyticsPrimaryKey =Get-AutomationVariable -Name LogAnalyticsPrimaryKey
 $azurelocation =Get-AutomationVariable -Name azurelocation
-$RecoveryServicesVaultCreateparametersvaultName  =Get-AutomationVariable -Name RecoveryServicesVaultCreateparametersvaultName
+$RecoveryServicesVaultCreateparametersvaultName  = Get-AutomationVariable -Name RecoveryServicesVaultCreateparametersvaultName
+
 $baseuri=Get-AutomationVariable -Name baseuri
 
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
@@ -134,6 +137,6 @@ New-AzureRmResourceGroupDeployment -Name "automation"  -ResourceGroupName $Azure
 
 #Time to configure the backup
 Get-AzureRmRecoveryServicesVault -Name $RecoveryServicesVaultCreateparametersvaultName | Set-AzureRmRecoveryServicesVaultContext 
-$pol=Get-AzureRmRecoveryServicesBackupProtectionPolicy -Name $backuppolicyparameters."policyName"
+$pol=Get-AzureRmRecoveryServicesBackupProtectionPolicy -Name $backuppolicyparameterspolicyName
 foreach($name in (Get-AzureRmvm | where {$_.resourcegroupname -eq $AzureResourceGroupName}).NAME)
 {Enable-AzureRmRecoveryServicesBackupProtection -Policy $pol -Name $name -ResourceGroupName $AzureResourceGroupName}
