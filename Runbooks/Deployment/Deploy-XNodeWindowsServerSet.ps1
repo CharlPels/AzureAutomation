@@ -4,7 +4,6 @@
 
     .NOTES
         AUTHOR: Charl Pels
-        LASTEDIT: 06-2-2017
 #>
 param(
     [Parameter(Mandatory=$true)]
@@ -12,10 +11,6 @@ param(
 
     [Parameter(Mandatory=$true)]
     [String] $vmNamePrefix,
-
-    #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    [Parameter(Mandatory=$true)]
-    [String] $StorageAccountName,
 
     [Parameter(Mandatory=$true)]
     [string] $NetworkparametersnetworkSubnetName,
@@ -213,7 +208,6 @@ $Azureparameters.Add("VmSize", $VmSize)
 $Azureparameters.Add("vmNamePrefix", $vmNamePrefix)
 $Azureparameters.Add("AdminUserName", $AdminUserName)
 $Azureparameters.Add("AdminPassword", $AdminPassword)
-$Azureparameters.Add("ServersStorageName", $StorageAccountName) #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
 $Azureparameters.Add("numberOfInstances", $numberOfInstances)
 $Azureparameters.Add("WindowsOSVersion", $WindowsOSVersion)
 $Azureparameters.Add("virtualNetworkResourceGroup", (Get-AutomationVariable -Name NetworkparametersResourceGroupName))
@@ -229,7 +223,7 @@ $Azureparameters.Add("workspacePrimaryKey", (Get-AutomationVariable -Name LogAna
 $Azureparameters.Add("SAStoken", $SAScontainertoken)
 $Azureparameters.Add("virtualNetworkSubnetName", $NetworkparametersnetworkSubnetName)
 
-#Create the AD Connect for o365 resource group
+#Create the resource group
 New-AzureRmResourceGroup -Name $AzureResourceGroupName -Location $azurelocation -Verbose -Force -ErrorAction Stop
 
 #generate template url
