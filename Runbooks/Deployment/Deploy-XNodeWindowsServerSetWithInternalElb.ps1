@@ -13,10 +13,6 @@ param(
     [Parameter(Mandatory=$true)]
     [String] $vmNamePrefix,
 
-    #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    [Parameter(Mandatory=$true)]
-    [String] $StorageAccountName,
-
     [Parameter(Mandatory=$true)]
     [string] $NetworkparametersnetworkSubnetName,
 
@@ -220,7 +216,6 @@ $Azureparameters.Add("VmSize", $VmSize)
 $Azureparameters.Add("vmNamePrefix", $vmNamePrefix)
 $Azureparameters.Add("AdminUserName", $AdminUserName)
 $Azureparameters.Add("AdminPassword", $AdminPassword)
-$Azureparameters.Add("ServersStorageName", $StorageAccountName) #Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
 $Azureparameters.Add("numberOfInstances", $numberOfInstances)
 $Azureparameters.Add("WindowsOSVersion", $WindowsOSVersion)
 $Azureparameters.Add("virtualNetworkResourceGroup", (Get-AutomationVariable -Name NetworkparametersResourceGroupName))
