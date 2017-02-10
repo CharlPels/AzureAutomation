@@ -59,7 +59,7 @@ if ($NetworkparametersNetWorkName -eq "getcustomerdefault" -or $SubscriptionID.t
 if ($WindowsOSVersion  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$WindowsOSVersion = Get-AutomationVariable -Name CustomerDefaultWindowsOSVersion}
 if ($ServerStorageType  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$ServerStorageType = Get-AutomationVariable -Name CustomerDefaultServerStorageType}
 if ($VmSize  -eq "getcustomerdefault" -or $SubscriptionID.tolower() -eq "none") {$VmSize = Get-AutomationVariable -Name CustomerDefaultVmSize}
-$StorageAccountName=$StorageAccountName.tolower()
+
 
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
