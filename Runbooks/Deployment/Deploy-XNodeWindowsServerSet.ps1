@@ -226,8 +226,14 @@ $Azureparameters.Add("virtualNetworkSubnetName", $NetworkparametersnetworkSubnet
 #Create the resource group
 New-AzureRmResourceGroup -Name $AzureResourceGroupName -Location $azurelocation -Verbose -Force -ErrorAction Stop
 
+#Managed storage is not yet supporing encryption and backup at the same time so we need managed storage withoud altering the templates
+$TemplateUri  = $baseuri + "VirtualServers/" + "GetFreeStorageName.json" + $SAScontainertoken
+$storagename = new-AzureRmResourceGroupDeployment -ResourceGroupName $AzureResourceGroupName  -TemplateUri $TemplateUri
+$storagename.Outputs.Values.Value
+$Azureparameters.Add("ServersstorageName", $storagename.Outputs.Values.Value)
+
 #generate template url
-$TemplateUri  = $baseuri + "VirtualServers/" + "Generic2NodePair.json" + $SAScontainertoken
+$TemplateUri  = $baseuri + "VirtualServers/" + "Generic2NodePair-storageaccount.json" + $SAScontainertoken
 
 Test-AzureRmResourceGroupDeployment -ResourceGroupName $AzureResourceGroupName  -TemplateUri $TemplateUri -TemplateParameterObject $Azureparameters
 New-AzureRmResourceGroupDeployment -Name "automation"  -ResourceGroupName $AzureResourceGroupName -TemplateUri $TemplateUri -TemplateParameterObject $Azureparameters -Verbose
