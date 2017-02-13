@@ -219,6 +219,12 @@ $Azureparameters.Add("workspacePrimaryKey", (Get-AutomationVariable -Name LogAna
 $Azureparameters.Add("SAStoken", $SAScontainertoken)
 $Azureparameters.Add("virtualNetworkSubnetName", $NetworkparametersnetworkSubnetName)
 
+#Managed storage is not yet supporing encryption and backup at the same time so we need managed storage withoud altering the templates
+$storagename = new-AzureRmResourceGroupDeployment -ResourceGroupName $AzureResourceGroupName  -TemplateUri $TemplateUri
+$storagename.Outputs.Values.Value
+$Azureparameters.Add("ServersstorageName", $storagename.Outputs.Values.Value)
+
+
 #Create the resource group
 New-AzureRmResourceGroup -Name $AzureResourceGroupName -Location $azurelocation -Verbose -Force -ErrorAction Stop
 
