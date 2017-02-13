@@ -230,7 +230,7 @@ $storagename.Outputs.Values.Value
 $Azureparameters.Add("ServersstorageName", $storagename.Outputs.Values.Value)
 
 #generate template url
-$TemplateUri  = $baseuri + "VirtualServers/" + "Generic1Node.json" + $SAScontainertoken
+$TemplateUri  = $baseuri + "VirtualServers/" + "Generic1Node-storageaccount.json" + $SAScontainertoken
 
 Test-AzureRmResourceGroupDeployment -ResourceGroupName $AzureResourceGroupName  -TemplateUri $TemplateUri -TemplateParameterObject $Azureparameters
 New-AzureRmResourceGroupDeployment -Name "automation"  -ResourceGroupName $AzureResourceGroupName -TemplateUri $TemplateUri -TemplateParameterObject $Azureparameters -Verbose
